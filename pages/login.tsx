@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { config } from '../config'
 import { Fetch } from '../services/fetch'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
+import { useUserContext } from '../context/usernameContext'
 
 const Container = styled.div`
   width: 100%;
@@ -55,12 +57,13 @@ const initialState = {
 const Login = () => {
   const [credentials, setCredentials] = React.useState(initialState)
   const [error, setError] = React.useState(false)
+  const { setUser } = useUserContext()
   const router = useRouter()
 
   if (process.browser) {
-    const token = window.localStorage.getItem("token")
+    const token = window.localStorage.getItem('token')
     if (token) {
-      router.replace("/dashboard")
+      router.replace('/dashboard')
       return null
     }
   }
@@ -74,6 +77,7 @@ const Login = () => {
     setError(status !== 200)
 
     if (status === 200) {
+      setUser(data.user)
       localStorage.setItem('token', data.token)
       router.replace('/dashboard')
     }
@@ -85,46 +89,52 @@ const Login = () => {
   }
 
   return (
-    <Container>
-      <MiddleEffect>
-        <h1>Bandbook</h1>
-      </MiddleEffect>
-      <Wrapper>
-        <form onSubmit={handleSubmit}>
-          <Section>
-            <label htmlFor="user">Username</label>
-            <Input
-              type="text"
-              id="username"
-              placeholder="Enter your username"
-              fullWidth
-              name="username"
-              onChange={handleChange}
-            />
-          </Section>
-          <Section>
-            <label htmlFor="user">Password</label>
-            <Input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              fullWidth
-              name="password"
-              onChange={handleChange}
-            />
-          </Section>
-          <Section>
-            <Button color="secondary" fullWidth>
-              Signin
-            </Button>
-          </Section>
-          <Section>
-            {error && <ErrorText>User or password invalid</ErrorText>}
-            <small></small>
-          </Section>
-        </form>
-      </Wrapper>
-    </Container>
+    <>
+      <Head>
+        <title>Bandbook Login</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Container>
+        <MiddleEffect>
+          <h1>Bandbook</h1>
+        </MiddleEffect>
+        <Wrapper>
+          <form onSubmit={handleSubmit}>
+            <Section>
+              <label htmlFor="user">Username</label>
+              <Input
+                type="text"
+                id="username"
+                placeholder="Enter your username"
+                fullWidth
+                name="username"
+                onChange={handleChange}
+              />
+            </Section>
+            <Section>
+              <label htmlFor="user">Password</label>
+              <Input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                fullWidth
+                name="password"
+                onChange={handleChange}
+              />
+            </Section>
+            <Section>
+              <Button color="secondary" fullWidth>
+                Signin
+              </Button>
+            </Section>
+            <Section>
+              {error && <ErrorText>User or password invalid</ErrorText>}
+              <small></small>
+            </Section>
+          </form>
+        </Wrapper>
+      </Container>
+    </>
   )
 }
 

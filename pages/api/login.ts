@@ -1,4 +1,4 @@
-import { TokenGenerator } from "./generateToken"
+import { TokenGenerator } from './generateToken'
 
 const DB_MOCK = [
   {
@@ -22,11 +22,12 @@ export default function login(req, res) {
   if (user) {
     const payload = {
       username: user.username,
-      id: user.id
+      id: user.id,
     }
     const token = new TokenGenerator(payload).generateToken()
     return res.json({
-      token
+      token,
+      user: { ...payload },
     })
   }
 
