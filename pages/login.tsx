@@ -44,7 +44,7 @@ const Section = styled.div`
 
 const ErrorText = styled.small`
   position: absolute;
-  color: ${props => props.theme.colors.danger};
+  color: ${(props) => props.theme.colors.danger};
 `
 
 const initialState = {
@@ -57,17 +57,25 @@ const Login = () => {
   const [error, setError] = React.useState(false)
   const router = useRouter()
 
+  if (process.browser) {
+    const token = window.localStorage.getItem("token")
+    if (token) {
+      router.replace("/dashboard")
+      return null
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { status, data } = await new Fetch(
       `${config.host}${config.login}`
     ).post(credentials)
-    
+
     setError(status !== 200)
 
     if (status === 200) {
-      localStorage.setItem("token", data.token)
-      router.push("/dashboard")
+      localStorage.setItem('token', data.token)
+      router.replace('/dashboard')
     }
   }
 
@@ -112,7 +120,7 @@ const Login = () => {
           </Section>
           <Section>
             {error && <ErrorText>User or password invalid</ErrorText>}
-              <small></small>
+            <small></small>
           </Section>
         </form>
       </Wrapper>

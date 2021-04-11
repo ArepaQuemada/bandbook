@@ -1,9 +1,8 @@
 import React from 'react'
+import withAuth from '../hoc/withAuth'
 
-export default function dashboard() {
-  return (
-    <div>
-      Dashboard
-    </div>
-  )
+function dashboard() {
+  return <div>Dashboard</div>
 }
+
+export default withAuth(dashboard, "/login")

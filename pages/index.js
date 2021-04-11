@@ -1,5 +1,14 @@
-import React from 'react'
+import { useRouter } from 'next/router'
 
 export default function Home() {
-  return <></>
+  const router = useRouter()
+  if (process.browser) {
+    const token = window.localStorage.getItem("token")
+    if (token) {
+      router.replace("/dashboard")
+      return null
+    }
+    router.replace("/login")
+  }
+  return null
 }
