@@ -6,7 +6,6 @@ import { config } from '../config'
 import { Fetch } from '../services/fetch'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { useUserContext } from '../context/usernameContext'
 
 const Container = styled.div`
   width: 100%;
@@ -57,7 +56,6 @@ const initialState = {
 const Login = () => {
   const [credentials, setCredentials] = React.useState(initialState)
   const [error, setError] = React.useState(false)
-  const { setUser } = useUserContext()
   const router = useRouter()
 
   if (process.browser) {
@@ -77,8 +75,8 @@ const Login = () => {
     setError(status !== 200)
 
     if (status === 200) {
-      setUser(data.user)
       localStorage.setItem('token', data.token)
+      localStorage.setItem('user', JSON.stringify(data.user))
       router.replace('/dashboard')
     }
   }

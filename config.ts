@@ -1,4 +1,6 @@
 export const config = {
   host: process.env.NEXT_PUBLIC_HOST,
-  login: '/api/login'
+  login: '/api/login',
+  genres: 'https://my-json-server.typicode.com/improvein/dev-challenge/genre',
+  bands: 'https://my-json-server.typicode.com/improvein/dev-challenge/bands',
 }

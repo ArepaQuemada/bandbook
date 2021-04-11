@@ -14,7 +14,7 @@ const SButton = styled.button<IButton>`
     box-shadow: 0 0 5px ${props => props.theme.colors[props.color ?? "primary"]};
   }
 `
-interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: 'primary' | 'secondary' | 'danger' | 'success'
   fullWidth?: boolean
 }

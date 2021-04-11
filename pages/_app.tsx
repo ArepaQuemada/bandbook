@@ -5,16 +5,23 @@ import { theme } from '../theme/theme'
 import { User } from '../types/user'
 import { UserContext } from '../context/usernameContext'
 
-const initialState : User = {
-  username: "",
-  id: 0
+const initialState: User = {
+  username: '',
+  id: 0,
 }
 
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = React.useState(initialState)
 
+  React.useEffect(() => {
+    const userFromLocalStorage = window.localStorage.getItem('user')
+    if (userFromLocalStorage) {
+      setUser(JSON.parse(userFromLocalStorage))
+    }
+  }, [])
+
   return (
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{ user, setUser }}>
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />
       </ThemeProvider>
