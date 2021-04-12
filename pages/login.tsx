@@ -6,6 +6,7 @@ import { config } from '../config'
 import { Fetch } from '../services/fetch'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { useUserContext } from '../context/usernameContext'
 
 /**
  * Component styles
@@ -53,7 +54,7 @@ const ErrorText = styled.small`
 
 const initialState = {
   username: '',
-  password: '',
+  password: ''
 }
 
 /**
@@ -62,6 +63,7 @@ const initialState = {
 const Login = () => {
   const [credentials, setCredentials] = React.useState(initialState)
   const [error, setError] = React.useState(false)
+  const { setUser } = useUserContext()
   const router = useRouter()
 
   /**
@@ -78,7 +80,7 @@ const Login = () => {
   /**
    * Checks user credentials and if it's successfull will set token and user
    * and then redirect to dashboard
-   * @param e 
+   * @param e
    */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -89,6 +91,7 @@ const Login = () => {
     setError(status !== 200)
 
     if (status === 200) {
+      setUser(data.user)
       localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data.user))
       router.replace('/dashboard')
@@ -97,7 +100,7 @@ const Login = () => {
 
   /**
    * Sets credentials
-   * @param e 
+   * @param e
    */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError(false)
