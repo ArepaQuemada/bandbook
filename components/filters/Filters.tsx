@@ -3,10 +3,15 @@ import styled from 'styled-components'
 import FilterButton from "../filter-button/FilterButton";
 
 const Container = styled.section`
-  width: 45%;
+  background-color: ${props => props.theme.colors.neutral};
+  border-radius: 0px 15px;
+  width: 35%;
+  max-width: 350px;
   padding: 20px;
   @media (max-width: 500px) {
+    max-width: 100%;
     width: 100%;
+    border-radius: 0;
   }
 `
 

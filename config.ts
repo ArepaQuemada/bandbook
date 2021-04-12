@@ -3,4 +3,5 @@ export const config = {
   login: '/api/login',
   genres: 'https://my-json-server.typicode.com/improvein/dev-challenge/genre',
   bands: 'https://my-json-server.typicode.com/improvein/dev-challenge/bands',
+  albumns: 'https://my-json-server.typicode.com/improvein/dev-challenge/albums'
 }

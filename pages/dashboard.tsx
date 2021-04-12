@@ -1,30 +1,33 @@
 import React from 'react'
+import styled from 'styled-components'
 import withAuth from '../hoc/withAuth'
-import Nav from '../components/nav/Nav'
-import Button from '../components/button/Button'
-import { useUserContext } from '../context/usernameContext'
-import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Filters from '../components/filters/Filters'
 import { Fetch } from '../services/fetch'
 import { config } from '../config'
 import { FiltersContext } from '../context/filtersContext'
+import BandsContainer from '../components/bands-container/BandsContainer'
+import Layout from '../components/layout'
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`
 
 const filtersInitialState: string[] = []
 
-function dashboard({ genres }) {
-  const { user } = useUserContext()
+function dashboard({ genres, bands }) {
   const [filters, setFilters] = React.useState(filtersInitialState)
-  const router = useRouter()
-
-  const handleLogout = () => {
-    window.localStorage.removeItem('token')
-    window.localStorage.removeItem('user')
-    router.replace('/')
-  }
+  const [bandsFilter, setBandsFilter] = React.useState(bands)
 
   React.useEffect(() => {
-    console.log(filters)
+    if (filters.length === 0) {
+      return setBandsFilter(() => [...bands])
+    }
+    setBandsFilter((prev) => {
+      return prev.filter((b) => filters.every((f) => f === b.genreCode))
+    })
   }, [filters])
 
   return (
@@ -32,17 +35,14 @@ function dashboard({ genres }) {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <Nav>
-        <Nav.Brand>
-          <h3>Welcome {user.username}</h3>
-        </Nav.Brand>
-        <Button color="secondary" onClick={handleLogout}>
-          Logout
-        </Button>
-      </Nav>
-      <FiltersContext.Provider value={{ filters, setFilters }}>
-        <Filters title="Genres" filters={genres} />
-      </FiltersContext.Provider>
+      <Layout>
+        <FiltersContext.Provider value={{ filters, setFilters }}>
+          <Container>
+            <Filters title="Genres" filters={genres} />
+            <BandsContainer bands={bandsFilter} />
+          </Container>
+        </FiltersContext.Provider>
+      </Layout>
     </>
   )
 }
@@ -55,7 +55,7 @@ export async function getStaticProps() {
   return {
     props: {
       genres,
-      bands,
-    },
+      bands
+    }
   }
 }
