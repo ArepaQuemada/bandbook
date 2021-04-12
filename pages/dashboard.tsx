@@ -9,18 +9,32 @@ import { FiltersContext } from '../context/filtersContext'
 import BandsContainer from '../components/bands-container/BandsContainer'
 import Layout from '../components/layout'
 
+/**
+ * Component styles
+ */
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 `
 
+/**
+ * Initial state
+ */
 const filtersInitialState: string[] = []
 
+/**
+ * Dashboard page
+ * @param props
+ */
 function dashboard({ genres, bands }) {
   const [filters, setFilters] = React.useState(filtersInitialState)
   const [bandsFilter, setBandsFilter] = React.useState(bands)
 
+  /**
+   * If there's any filter it will show bands that match said filter
+   * else it will show every band
+   */
   React.useEffect(() => {
     if (filters.length === 0) {
       return setBandsFilter(() => [...bands])
@@ -49,6 +63,9 @@ function dashboard({ genres, bands }) {
 
 export default withAuth(dashboard, '/login')
 
+/**
+ * Fetch genres and bands
+ */
 export async function getStaticProps() {
   const genres = await new Fetch(config.genres).get()
   const bands = await new Fetch(config.bands).get()

@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const guitar = require('../../assets/guitarra.svg') as string
 
+/**
+ * Components styles
+ */
 const Container = styled.section`
   width: 65%;
   display: flex;
@@ -63,9 +66,17 @@ interface IBandsContainer {
   bands: Band[]
 }
 
+/**
+ * Band container component that renders every band fetched
+ * @param bands 
+ */
 export default function BandsContainer({ bands }: IBandsContainer) {
   const router = useRouter()
 
+  /**
+   * Creates the uri and redirects to Dynamic band page
+   * @param b Band that will be passed to Dynamic page
+   */
   const handleClick = (b) => {
     const query = { data: JSON.stringify(b) }
     const url = { pathname: `/${b.name}`, query }

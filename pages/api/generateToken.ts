@@ -1,5 +1,8 @@
 import jwt from 'jsonwebtoken'
 
+/**
+ * Class that generates a new token
+ */
 export class TokenGenerator {
   private payload: Record<string, unknown>
 

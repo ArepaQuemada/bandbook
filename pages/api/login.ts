@@ -1,5 +1,8 @@
 import { TokenGenerator } from './generateToken'
 
+/**
+ * Mocked data to test login
+ */
 const DB_MOCK = [
   {
     username: 'Test',
@@ -13,6 +16,11 @@ const DB_MOCK = [
   },
 ]
 
+/**
+ * Login api
+ * @param req 
+ * @param res 
+ */
 export default function login(req, res) {
   const { username, password } = JSON.parse(req.body)
   const user = DB_MOCK.find((u) => {

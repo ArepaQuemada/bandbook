@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import FilterButton from "../filter-button/FilterButton";
 
+/**
+ * Component styles
+ */
 const Container = styled.section`
   background-color: ${props => props.theme.colors.neutral};
   border-radius: 0px 15px;
@@ -28,16 +31,26 @@ const Li = styled.li`
   padding: 15px;
 `
 
+/**
+ * Filter types
+ */
 type TFilters = {
   code: string
   name: string
 }
 
+/**
+ * Filter props
+ */
 interface IFilters {
   title: string
   filters: TFilters[]
 }
 
+/**
+ * Filters component that renders a list of filters
+ * @param props 
+ */
 export default function Filters({ title, filters }: IFilters) {
   return (
     <Container>

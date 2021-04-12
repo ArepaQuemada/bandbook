@@ -1,3 +1,6 @@
+/**
+ * Theme for theme provider with styled components
+ */
 export const theme = {
   colors: {
     primary: "#1976D2",

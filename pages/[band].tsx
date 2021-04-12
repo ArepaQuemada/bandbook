@@ -6,6 +6,9 @@ import { config } from '../config'
 import styled from 'styled-components'
 import Head from 'next/head'
 
+/**
+ * Component styles
+ */
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -39,6 +42,10 @@ interface ISection {
   justify?: string
 }
 
+/**
+ * Dynamic band page
+ * @param props 
+ */
 const Band = ({ query, albums }) => {
   const band = JSON.parse(query.data.toString())
   const bandAlbums = albums.filter((a) => a.bandId === band.id)
@@ -114,6 +121,10 @@ const Band = ({ query, albums }) => {
 
 export default withAuth(Band, '/login')
 
+/**
+ * Returns query from params and fetchs albums
+ * @param props
+ */
 export async function getServerSideProps({ query }) {
   const albums = await new Fetch(config.albumns).get()
 

@@ -7,6 +7,9 @@ import { Fetch } from '../services/fetch'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
+/**
+ * Component styles
+ */
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -53,11 +56,17 @@ const initialState = {
   password: '',
 }
 
+/**
+ * Login page
+ */
 const Login = () => {
   const [credentials, setCredentials] = React.useState(initialState)
   const [error, setError] = React.useState(false)
   const router = useRouter()
 
+  /**
+   * If user it's logged in it will redirect to dashboard
+   */
   if (process.browser) {
     const token = window.localStorage.getItem('token')
     if (token) {
@@ -66,6 +75,11 @@ const Login = () => {
     }
   }
 
+  /**
+   * Checks user credentials and if it's successfull will set token and user
+   * and then redirect to dashboard
+   * @param e 
+   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { status, data } = await new Fetch(
@@ -81,6 +95,10 @@ const Login = () => {
     }
   }
 
+  /**
+   * Sets credentials
+   * @param e 
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError(false)
     setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }))

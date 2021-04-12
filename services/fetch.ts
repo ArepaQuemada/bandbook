@@ -1,3 +1,6 @@
+/**
+ * Class that handles api calls
+ */
 export class Fetch {
   private uri: string
 

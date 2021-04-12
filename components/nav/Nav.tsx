@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import Brand from './Brand'
 
+/**
+ * Component styles
+ */
 const SNav = styled.nav`
   width: 100%;
   padding: 15px;
@@ -11,10 +14,17 @@ const SNav = styled.nav`
   display: flex;
 `
 
+/**
+ * Navbar component
+ * @param props
+ */
 const Nav = ({ children, ...props }) => {
   return <SNav {...props}>{children}</SNav>
 }
 
+/**
+ * Compound with Brand component
+ */
 Nav.Brand = Brand
 
 export default Nav

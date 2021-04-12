@@ -1,5 +1,9 @@
 import { useRouter } from 'next/router'
 
+/**
+ * Entry point
+ * Will redirect if a user it's logged
+ */
 export default function Home() {
   const router = useRouter()
   if (process.browser) {

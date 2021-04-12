@@ -4,10 +4,17 @@ import Nav from './nav/Nav'
 import { useUserContext } from '../context/usernameContext'
 import { useRouter } from 'next/router'
 
+/**
+ * Component that will show on every protected route page
+ * @param props
+ */
 export default function layout({ children }) {
   const { user } = useUserContext()
   const router = useRouter()
 
+  /**
+   * Handles logout
+   */
   const handleLogout = () => {
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('user')
